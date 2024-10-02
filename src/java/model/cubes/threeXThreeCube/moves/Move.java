@@ -1,9 +1,14 @@
 package model.cubes.threeXThreeCube.moves;
 
+import model.Utils;
 import model.cubes.Cube;
 import model.cubes.threeXThreeCube.Face;
 import model.cubes.threeXThreeCube.ThreeCube;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,31 +25,6 @@ public enum Move {
     RD,
     LU,
     LD;
-
-    /**
-     * Performs the DR move on a {@link ThreeCube}
-     * @param threeCube The cube.
-     */
-    public static void bottomRight(ThreeCube threeCube) {
-        int[][][] cube = threeCube.getCube();
-        int face = Face.BOTTOM.num;
-
-        rotateFaceRight(face, cube);
-        rotateByBottomAffectedFacesRight(cube);
-
-    }
-
-    private static void rotateByBottomAffectedFacesRight(int[][][] cube) {
-        //Save one of the affected Faces last row
-        var tmp = cube[Face.FRONT.num][2];
-
-        //Rotate the affected Faces last rows clockwise
-        cube[Face.FRONT.num][2] = cube[Face.LEFT.num][2];
-        cube[Face.LEFT.num][2] = cube[Face.BACK.num][2];
-        cube[Face.BACK.num][2] = cube[Face.RIGHT.num][2];
-        cube[Face.RIGHT.num][2] = tmp;
-
-    }
 
     /**
      * Rotates only the focussed {@link Face} of a move. Ignoring the other faces that change thereby.
@@ -75,11 +55,75 @@ public enum Move {
     }
 
     /**
+     * Performs the DR move on a {@link ThreeCube}
+     * @param threeCube The cube.
+     */
+    public static void bottomRight(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.BOTTOM.num;
+
+        rotateFaceRight(face, cube);
+        rotateByBottomAffectedFacesRight(cube);
+
+    }
+
+    private static void rotateByBottomAffectedFacesRight(int[][][] cube) {
+        //Save one of the affected Faces last row
+        var tmp = cube[Face.FRONT.num][2];
+
+        //Rotate the affected Faces last rows clockwise
+        cube[Face.FRONT.num][2] = cube[Face.LEFT.num][2];
+        cube[Face.LEFT.num][2] = cube[Face.BACK.num][2];
+        cube[Face.BACK.num][2] = cube[Face.RIGHT.num][2];
+        cube[Face.RIGHT.num][2] = tmp;
+
+    }
+
+
+
+    /**
      * Performs the FR move on a {@link ThreeCube}
      * @param threeCube The cube.
      */
     public static void frontRight(ThreeCube threeCube) {
         int[][][] cube = threeCube.getCube();
+        int face = Face.FRONT.num;
+
+        rotateFaceRight(face, cube);
+        rotateByFrontAffectedFacesRight(cube);
+    }
+
+    private static void rotateByFrontAffectedFacesRight(int[][][] cube) {
+        //Save last row of top face
+        var tmp = cube[Face.TOP.num][2];
+
+        //Rotate front face bordering layers clockwise
+        //New Top Face
+        rotateTopOrBottomAffectedByFrontRight(cube, true);
+
+        //New Left Face
+        for (int i = 0; i < 3; i++) {
+            cube[Face.LEFT.num][i][2] = cube[Face.BOTTOM.num][0][i];
+        }
+
+        //New Bottom Face
+        rotateTopOrBottomAffectedByFrontRight(cube, false);
+
+        //New Right Face
+        for (int i = 0; i < tmp.length; i++) {
+            cube[Face.RIGHT.num][i][0] = tmp[i];
+        }
+    }
+
+    private static void rotateTopOrBottomAffectedByFrontRight(int[][][] cube, boolean top) {
+        int n = top? 2 : 0;
+        int face = top? Face.LEFT.num : Face.RIGHT.num;
+
+        var newFace = new int[3];
+        for (int i = 0; i < newFace.length; i++) {
+            newFace[i] = cube[face][i][n];
+        }
+        cube[top? Face.TOP.num : Face.BOTTOM.num][n] = Utils.reverseIntArray(newFace);
     }
 
     /**
