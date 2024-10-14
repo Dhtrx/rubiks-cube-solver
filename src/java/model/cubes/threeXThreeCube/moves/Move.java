@@ -90,33 +90,35 @@ public enum Move {
         int face = Face.FRONT.num;
 
         rotateFaceRight(face, cube);
-        rotateByFrontAffectedFacesRight(cube);
+        rotateByFrontOrBackAffectedFacesRight(cube, true);
     }
 
-    private static void rotateByFrontAffectedFacesRight(int[][][] cube) {
-        //Save last row of top face
-        var tmp = cube[Face.TOP.num][2];
+    private static void rotateByFrontOrBackAffectedFacesRight(int[][][] cube, boolean front) {
+        int n = front? 2 : 0;
+        int m = front? 0 : 2;
+        //Save last or first row of top face
+        var tmp = cube[Face.TOP.num][n];
 
-        //Rotate front face bordering layers clockwise
+        //Rotate front- or back-face bordering layers clockwise
         //New Top Face
-        rotateTopOrBottomAffectedByFrontRight(cube, true);
+        rotateTopOrBottomAffectedByFrontOrBackRight(cube, true, front);
 
         //New Left Face
         for (int i = 0; i < 3; i++) {
-            cube[Face.LEFT.num][i][2] = cube[Face.BOTTOM.num][0][i];
+            cube[Face.LEFT.num][i][n] = cube[Face.BOTTOM.num][m][i];
         }
 
         //New Bottom Face
-        rotateTopOrBottomAffectedByFrontRight(cube, false);
+        rotateTopOrBottomAffectedByFrontOrBackRight(cube, false, front);
 
         //New Right Face
         for (int i = 0; i < tmp.length; i++) {
-            cube[Face.RIGHT.num][i][0] = tmp[i];
+            cube[Face.RIGHT.num][i][m] = tmp[i];
         }
     }
 
-    private static void rotateTopOrBottomAffectedByFrontRight(int[][][] cube, boolean top) {
-        int n = top? 2 : 0;
+    private static void rotateTopOrBottomAffectedByFrontOrBackRight(int[][][] cube, boolean top, boolean front) {
+        int n = top ^ front? 0 : 2;
         int face = top? Face.LEFT.num : Face.RIGHT.num;
 
         var newFace = new int[3];
@@ -132,6 +134,10 @@ public enum Move {
      */
     public static void backRight(ThreeCube threeCube) {
         int[][][] cube = threeCube.getCube();
+        int face = Face.BACK.num;
+
+        rotateFaceRight(face, cube);
+        rotateByFrontOrBackAffectedFacesRight(cube, false);
     }
 
     /**
