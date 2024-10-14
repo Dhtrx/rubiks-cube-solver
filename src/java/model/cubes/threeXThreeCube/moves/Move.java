@@ -63,20 +63,27 @@ public enum Move {
         int face = Face.BOTTOM.num;
 
         rotateFaceRight(face, cube);
-        rotateByBottomAffectedFacesRight(cube);
+        rotateByBottomOrTopAffectedFacesRight(cube, false);
 
     }
 
-    private static void rotateByBottomAffectedFacesRight(int[][][] cube) {
-        //Save one of the affected Faces last row
-        var tmp = cube[Face.FRONT.num][2];
-
+    private static void rotateByBottomOrTopAffectedFacesRight(int[][][] cube, boolean top) {
+        int n = top? 0 : 2;
+        //Save one of the affected Faces last or first row
+        var front = cube[Face.FRONT.num][n];
+        var back = cube[Face.BACK.num][n];
         //Rotate the affected Faces last rows clockwise
-        cube[Face.FRONT.num][2] = cube[Face.LEFT.num][2];
-        cube[Face.LEFT.num][2] = cube[Face.BACK.num][2];
-        cube[Face.BACK.num][2] = cube[Face.RIGHT.num][2];
-        cube[Face.RIGHT.num][2] = tmp;
-
+        if (top) {
+            cube[Face.FRONT.num][n] = cube[Face.RIGHT.num][n];
+            cube[Face.LEFT.num][n] = cube[Face.FRONT.num][n];
+            cube[Face.BACK.num][n] = cube[Face.LEFT.num][n];
+            cube[Face.RIGHT.num][n] = back;
+        } else {
+            cube[Face.FRONT.num][n] = cube[Face.LEFT.num][n];
+            cube[Face.LEFT.num][n] = cube[Face.BACK.num][n];
+            cube[Face.BACK.num][n] = cube[Face.RIGHT.num][n];
+            cube[Face.RIGHT.num][n] = front;
+        }
     }
 
 
@@ -146,5 +153,9 @@ public enum Move {
      */
     public static void topRight(ThreeCube threeCube) {
         int[][][] cube = threeCube.getCube();
+        int face = Face.TOP.num;
+
+        rotateFaceRight(face, cube);
+        rotateByBottomOrTopAffectedFacesRight(cube, true);
     }
 }
