@@ -95,7 +95,15 @@ public class ThreeCube implements Cube {
 
     @Override
     public void rotateLeft(Face face) {
+        int faceNum = face.num;
 
+        switch (faceNum) {
+            case 0 -> Move.bottomLeft(this);
+            case 1 -> Move.frontLeft(this);
+            case 2 -> Move.backLeft(this);
+            case 5 -> Move.topLeft(this);
+            default -> throw new IllegalArgumentException(STR."Cannot process value \{faceNum}");
+        }
     }
 
     @Override
