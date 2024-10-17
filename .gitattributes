@@ -1,0 +1,30 @@
+# Markiere Java-Dateien
+*.java linguist-language=Java
+
+# Markiere Python-Dateien
+*.py linguist-language=Python
+
+# Ignoriere bestimmte Verzeichnisse
+/build/* linguist-language=Java
+/tests/* linguist-language=Python
+
+# Behandle Markdown-Dateien als Text
+*.md text
+
+# Sicherstellen, dass Zeilenenden für Textdateien normalisiert werden
+*.txt text eol=lf
+
+# Behandle alle JSON-Dateien als Text
+*.json text
+
+# Behandle YAML-Dateien als Text
+*.yaml text
+*.yml text
+
+# Behandle XML-Dateien als Text
+*.xml text
+
+# Beispiel für die Behandlung von Binärdateien
+*.jar binary
+*.zip binary
+*.tar.gz binary
