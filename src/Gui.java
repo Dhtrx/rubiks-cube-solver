@@ -6,6 +6,9 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Gui extends JFrame implements GLEventListener {
 
@@ -25,6 +28,24 @@ public class Gui extends JFrame implements GLEventListener {
 
         canvas.addGLEventListener(this);
         setVisible(true);
+
+        canvas.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                float offset = 2.5f;
+                if (e.isControlDown()) offset = -2.5f;
+                switch (e.getKeyCode()) {
+                    case 0x31 -> renderer.rotZ += offset;
+                    case 0x32 -> renderer.rotY += offset;
+                    case 0x33 -> renderer.rotX += offset;
+                    case 0x30 -> {
+                        renderer.rotX = 0;
+                        renderer.rotY = 0;
+                        renderer.rotZ = 0;
+                    }
+                }
+            }
+        });
 
         animator.start();
     }
