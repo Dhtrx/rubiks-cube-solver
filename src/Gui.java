@@ -19,6 +19,7 @@ public class Gui extends JFrame implements GLEventListener {
         GLCanvas canvas = new GLCanvas(capabilities);
         setSize(320, 320);
         getContentPane().add(canvas);
+        renderer = new Renderer();
 
         final FPSAnimator animator = new FPSAnimator(canvas, 60, true);
 
