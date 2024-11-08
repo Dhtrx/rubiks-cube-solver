@@ -53,33 +53,25 @@ public class Renderer {
         gl.glRotatef(rotZ, 0f, 0f, 1f);
 
         float spacing = 2.1f;
+
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {
                     gl.glPushMatrix();
                     gl.glTranslatef(x * spacing, y * spacing, z * spacing);
-                    drawCube(gl, RED, ORANGE, BLUE, GREEN, YELLOW, WHITE);
+
+                    List<Float> left = (x == -1) ? Renderer.BLUE : Renderer.BLACK;
+                    List<Float> right = (x == 1) ? Renderer.GREEN : Renderer.BLACK;
+                    List<Float> bottom = (y == -1) ? Renderer.WHITE : Renderer.BLACK;
+                    List<Float> top = (y == 1) ? Renderer.YELLOW : Renderer.BLACK;
+                    List<Float> front = (z == 1) ? Renderer.RED : Renderer.BLACK;
+                    List<Float> back = (z == -1) ? Renderer.ORANGE : Renderer.BLACK;
+
+                    drawCube(gl, front, back, left, right, top, bottom);
                     gl.glPopMatrix();
                 }
             }
         }
-
-        /*
-        //lef side
-        gl.glPushMatrix();
-        gl.glTranslatef(-1 * spacing, -1 * spacing, -1 * spacing);
-        drawCube(gl, Renderer.BLACK, Renderer.ORANGE, Renderer.BLUE, Renderer.BLACK, Renderer.BLACK, Renderer.WHITE);
-        gl.glPopMatrix();
-        gl.glPushMatrix();
-        gl.glTranslatef(-1 * spacing, -1 * spacing, 0 * spacing);
-        drawCube(gl, Renderer.BLACK, Renderer.BLACK, Renderer.BLUE, Renderer.BLACK, Renderer.BLACK, Renderer.WHITE);
-        gl.glPopMatrix();
-        gl.glPushMatrix();
-        gl.glTranslatef(-1 * spacing, -1 * spacing, 1 * spacing);
-        drawCube(gl, Renderer.RED, Renderer.BLACK, Renderer.BLUE, Renderer.BLACK, Renderer.BLACK, Renderer.WHITE);
-        gl.glPopMatrix();
-
-         */
     }
     public void dispose(GLAutoDrawable d) {
     }
