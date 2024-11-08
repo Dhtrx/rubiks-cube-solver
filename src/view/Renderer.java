@@ -1,7 +1,8 @@
+package view;
+
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.glu.GLU;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {

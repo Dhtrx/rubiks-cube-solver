@@ -1,3 +1,5 @@
+package view;
+
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
@@ -8,11 +10,10 @@ import com.jogamp.opengl.util.FPSAnimator;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Gui extends JFrame implements GLEventListener {
 
-    private Renderer renderer;
+    private view.Renderer renderer;
     public void create() {
         setTitle("First OpenGL");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

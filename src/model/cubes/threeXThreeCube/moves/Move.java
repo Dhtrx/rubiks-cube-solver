@@ -1,16 +1,8 @@
 package model.cubes.threeXThreeCube.moves;
 
 import model.Utils;
-import model.cubes.Cube;
 import model.cubes.threeXThreeCube.Face;
 import model.cubes.threeXThreeCube.ThreeCube;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Move {
     TR,

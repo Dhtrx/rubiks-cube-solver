@@ -4,8 +4,6 @@ import model.cubes.Color;
 import model.cubes.Cube;
 import model.cubes.threeXThreeCube.moves.Move;
 
-import java.util.Arrays;
-
 public class ThreeCube implements Cube {
 
     private final int[][][] cube;

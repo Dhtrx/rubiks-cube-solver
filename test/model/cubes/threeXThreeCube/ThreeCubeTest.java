@@ -2,7 +2,6 @@ package model.cubes.threeXThreeCube;
 
 import model.cubes.Color;
 import model.cubes.threeXThreeCube.moves.Move;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
