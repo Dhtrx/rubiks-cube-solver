@@ -58,54 +58,72 @@ public class Renderer {
                 for (int z = -1; z <= 1; z++) {
                     gl.glPushMatrix();
                     gl.glTranslatef(x * spacing, y * spacing, z * spacing);
-                    drawCube(gl);
+                    drawCube(gl, RED, ORANGE, BLUE, GREEN, YELLOW, WHITE);
                     gl.glPopMatrix();
                 }
             }
         }
+
+        /*
+        //lef side
+        gl.glPushMatrix();
+        gl.glTranslatef(-1 * spacing, -1 * spacing, -1 * spacing);
+        drawCube(gl, Renderer.BLACK, Renderer.ORANGE, Renderer.BLUE, Renderer.BLACK, Renderer.BLACK, Renderer.WHITE);
+        gl.glPopMatrix();
+        gl.glPushMatrix();
+        gl.glTranslatef(-1 * spacing, -1 * spacing, 0 * spacing);
+        drawCube(gl, Renderer.BLACK, Renderer.BLACK, Renderer.BLUE, Renderer.BLACK, Renderer.BLACK, Renderer.WHITE);
+        gl.glPopMatrix();
+        gl.glPushMatrix();
+        gl.glTranslatef(-1 * spacing, -1 * spacing, 1 * spacing);
+        drawCube(gl, Renderer.RED, Renderer.BLACK, Renderer.BLUE, Renderer.BLACK, Renderer.BLACK, Renderer.WHITE);
+        gl.glPopMatrix();
+
+         */
     }
     public void dispose(GLAutoDrawable d) {
     }
 
-    private void drawCube(GL2 gl) {
+    private void drawCube(GL2 gl, List<Float> frontColor, List<Float> backColor, List<Float> leftColor,
+                          List<Float> rightColor, List<Float> topColor, List<Float> bottomColor) {
         gl.glBegin(GL2.GL_QUADS);
 
         //Front
-        gl.glColor3f(1.0f, 0.0f, 0.0f);
+        gl.glColor3f(frontColor.get(0), frontColor.get(1), frontColor.get(2));
         gl.glVertex3f(-1.0f, -1.0f,  1.0f);
         gl.glVertex3f( 1.0f, -1.0f,  1.0f);
         gl.glVertex3f( 1.0f,  1.0f,  1.0f);
         gl.glVertex3f(-1.0f,  1.0f,  1.0f);
         //Back
-        gl.glColor3f(1.0f, .5f, 0.0f);
+        gl.glColor3f(backColor.get(0), backColor.get(1), backColor.get(2));
         gl.glVertex3f(-1.0f, -1.0f, -1.0f);
         gl.glVertex3f(-1.0f,  1.0f, -1.0f);
         gl.glVertex3f( 1.0f,  1.0f, -1.0f);
         gl.glVertex3f( 1.0f, -1.0f, -1.0f);
 
         //Left
-        gl.glColor3f(0.0f, 0.0f, 1.0f);
+        gl.glColor3f(leftColor.get(0), leftColor.get(1), leftColor.get(2));
         gl.glVertex3f(-1.0f, -1.0f, -1.0f);
         gl.glVertex3f(-1.0f, -1.0f,  1.0f);
         gl.glVertex3f(-1.0f,  1.0f,  1.0f);
         gl.glVertex3f(-1.0f,  1.0f, -1.0f);
 
         //Right
-        gl.glColor3f(0.0f, 1.0f, 0.0f);
+        gl.glColor3f(rightColor.get(0), rightColor.get(1), rightColor.get(2));
         gl.glVertex3f( 1.0f, -1.0f, -1.0f);
         gl.glVertex3f( 1.0f,  1.0f, -1.0f);
         gl.glVertex3f( 1.0f,  1.0f,  1.0f);
         gl.glVertex3f( 1.0f, -1.0f,  1.0f);
 
         //Top
-        gl.glColor3f(1.0f, 1.0f, 0.0f);
+        gl.glColor3f(topColor.get(0), topColor.get(1), topColor.get(2));
         gl.glVertex3f(-1.0f,  1.0f, -1.0f);
         gl.glVertex3f(-1.0f,  1.0f,  1.0f);
         gl.glVertex3f( 1.0f,  1.0f,  1.0f);
         gl.glVertex3f( 1.0f,  1.0f, -1.0f);
 
         //Bottom
-        gl.glColor3f(1.0f, 1.0f, 1.0f);
+        gl.glColor3f(bottomColor.get(0), bottomColor.get(1), bottomColor.get(2));
         gl.glVertex3f(-1.0f, -1.0f, -1.0f);
         gl.glVertex3f( 1.0f, -1.0f, -1.0f);
         gl.glVertex3f( 1.0f, -1.0f,  1.0f);
