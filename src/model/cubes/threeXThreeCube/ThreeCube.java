@@ -86,7 +86,7 @@ public class ThreeCube implements Cube {
             case 2 -> Move.backRight(this);
             case 5 -> Move.topRight(this);
             default -> throw new IllegalArgumentException(STR."Cannot process value \{faceNum}");
-        };
+        }
 
 
     }
@@ -117,9 +117,9 @@ public class ThreeCube implements Cube {
     public int[][][] getCube() {
         return cube;
     }
-    //Reihenfolge: Front, Back, Left, Right, Top, Bottom
+
     @Override
-    public Color[][] toOneArrayForAnimation() {
+    public Color[][] toArrayForAnimation() {
         Color[][] ret = new Color[27][6];
 
         //Left side
@@ -129,7 +129,7 @@ public class ThreeCube implements Cube {
 
         ret[3] = new Color[]{Color.BLACK, Color.fromInt(cube[Face.BACK.num][1][2]), Color.fromInt(cube[Face.LEFT.num][1][0]), Color.BLACK, Color.BLACK, Color.BLACK};
         ret[4] = new Color[]{Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.LEFT.num][1][1]), Color.BLACK, Color.BLACK, Color.BLACK};
-        ret[5] = new Color[]{Color.fromInt(cube[Face.FRONT.num][1][0]), Color.BLACK, Color.fromInt(cube[Face.LEFT.num][2][2]), Color.BLACK, Color.BLACK, Color.BLACK};
+        ret[5] = new Color[]{Color.fromInt(cube[Face.FRONT.num][1][0]), Color.BLACK, Color.fromInt(cube[Face.LEFT.num][1][2]), Color.BLACK, Color.BLACK, Color.BLACK};
 
         ret[6] = new Color[]{Color.BLACK, Color.fromInt(cube[Face.BACK.num][0][2]), Color.fromInt(cube[Face.LEFT.num][0][0]), Color.BLACK, Color.fromInt(cube[Face.TOP.num][0][0]), Color.BLACK};
         ret[7] = new Color[]{Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.LEFT.num][0][1]), Color.BLACK, Color.fromInt(cube[Face.TOP.num][1][0]), Color.BLACK};
@@ -146,12 +146,12 @@ public class ThreeCube implements Cube {
 
         ret[15] =new Color[]{Color.BLACK, Color.fromInt(cube[Face.BACK.num][0][1]), Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.TOP.num][0][1]), Color.BLACK};
         ret[16] =new Color[]{Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.TOP.num][1][1]), Color.BLACK};
-        ret[17] =new Color[]{Color.fromInt(cube[Face.FRONT.num][0][1]), Color.BLACK, Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.TOP.num][0][2]), Color.BLACK};
+        ret[17] =new Color[]{Color.fromInt(cube[Face.FRONT.num][0][1]), Color.BLACK, Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.TOP.num][2][1]), Color.BLACK};
 
         //Right side
         ret[18] =new Color[]{Color.BLACK, Color.fromInt(cube[Face.BACK.num][2][0]), Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][2][2]), Color.BLACK, Color.fromInt(cube[Face.BOTTOM.num][2][2])};
-        ret[19] =new Color[]{Color.BLACK, Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][2][1]), Color.BLACK, Color.fromInt(cube[Face.BOTTOM.num][2][1])};
-        ret[20] =new Color[]{Color.fromInt(cube[Face.FRONT.num][2][2]), Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][2][0]), Color.BLACK, Color.fromInt(cube[Face.BOTTOM.num][2][0])};
+        ret[19] =new Color[]{Color.BLACK, Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][2][1]), Color.BLACK, Color.fromInt(cube[Face.BOTTOM.num][1][2])};
+        ret[20] =new Color[]{Color.fromInt(cube[Face.FRONT.num][2][2]), Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][2][0]), Color.BLACK, Color.fromInt(cube[Face.BOTTOM.num][0][2])};
 
         ret[21] =new Color[]{Color.BLACK, Color.fromInt(cube[Face.BACK.num][1][0]), Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][1][2]), Color.BLACK, Color.BLACK};
         ret[22] =new Color[]{Color.BLACK, Color.BLACK, Color.BLACK, Color.fromInt(cube[Face.RIGHT.num][1][1]), Color.BLACK, Color.BLACK};

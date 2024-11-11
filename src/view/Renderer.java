@@ -19,7 +19,7 @@ public class Renderer {
     private Cube cube;
     public volatile boolean rotatingFront = false;
     private int frontRotationAngle = 0;
-    private int frontRotations = 0;
+
 
     private final static List<Float> RED = List.of(1f, 0f, 0f);
     private final static List<Float> ORANGE = List.of(1f, .5f, 0f);
@@ -74,7 +74,7 @@ public class Renderer {
         gl.glRotatef(rotZ, 0f, 0f, 1f);
 
         float spacing = 2.1f;
-        Color[][] colors = cube.toOneArrayForAnimation();
+        Color[][] colors = cube.toArrayForAnimation();
 
         int i = 0;
         int j = 0;
@@ -90,18 +90,7 @@ public class Renderer {
                     }
 
                     gl.glTranslatef(x * spacing, y * spacing, z * spacing);
-                    /*
-                    List<Float> left = (x == -1) ? Renderer.BLUE : Renderer.BLACK;
-                    List<Float> right = (x == 1) ? Renderer.GREEN : Renderer.BLACK;
-                    List<Float> bottom = (y == -1) ? Renderer.WHITE : Renderer.BLACK;
-                    List<Float> top = (y == 1) ? Renderer.YELLOW : Renderer.BLACK;
-                    List<Float> front = (z == 1) ? Renderer.RED : Renderer.BLACK;
-                    List<Float> back = (z == -1) ? Renderer.ORANGE : Renderer.BLACK;
-
-                    drawCube(gl, front, back, left, right, top, bottom);
-
-                     */
-                    drawCube(gl, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb);
+                    drawCube(gl, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j++].rgb, colors[i][j].rgb);
                     j = 0;
                     gl.glPopMatrix();
                 }

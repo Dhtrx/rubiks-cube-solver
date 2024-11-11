@@ -2,6 +2,7 @@ package model.cubes;
 
 import model.cubes.threeXThreeCube.Face;
 import model.cubes.threeXThreeCube.moves.Move;
+import view.Renderer;
 
 public interface Cube {
 
@@ -59,7 +60,12 @@ public interface Cube {
      */
     void rotateDown(Face face);
 
-    Color[][] toOneArrayForAnimation();
+    /**
+     * Translates a {@link Cube} Object from its inner multidimensional Array representation to a 27x6 Array containing
+     * color information for every side of every cube for visualization purposes {@link Renderer}
+     * @return
+     */
+    Color[][] toArrayForAnimation();
 
 
 }
