@@ -126,6 +126,26 @@ class ThreeCubeTest {
     }
 
     @Test
+    void rotateRightTR() {
+        threeCube.rotate(Move.TR);
+
+        assertArrayEquals(new int[][]{
+                {Color.WHITE.num, Color.GREEN.num, Color.BLUE.num},
+                {Color.ORANGE.num, Color.YELLOW.num, Color.ORANGE.num},
+                {Color.BLUE.num, Color.BLUE.num, Color.ORANGE.num}
+        }, threeCube.getCube()[Face.TOP.num]);
+
+        //assert new Front Face
+        assertArrayEquals(new int[]{Color.RED.num, Color.RED.num, Color.BLUE.num}, threeCube.getCube()[Face.FRONT.num][0]);
+        //assert new Left Face
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.WHITE.num, Color.WHITE.num}, threeCube.getCube()[Face.LEFT.num][0]);
+        //assert new Back Face
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.RED.num, Color.ORANGE.num}, threeCube.getCube()[Face.BACK.num][0]);
+        //assert new Right Face
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.BLUE.num, Color.RED.num}, threeCube.getCube()[Face.RIGHT.num][0]);
+    }
+
+    @Test
     void rotateLeft() {
     }
 

@@ -71,13 +71,12 @@ public enum Move {
         int n = top? 0 : 2;
         //Save one of the affected Faces last or first row
         var front = cube[Face.FRONT.num][n];
-        var back = cube[Face.BACK.num][n];
         //Rotate the affected Faces last rows clockwise
         if (top) {
             cube[Face.FRONT.num][n] = cube[Face.RIGHT.num][n];
-            cube[Face.LEFT.num][n] = cube[Face.FRONT.num][n];
+            cube[Face.RIGHT.num][n] = cube[Face.BACK.num][n];
             cube[Face.BACK.num][n] = cube[Face.LEFT.num][n];
-            cube[Face.RIGHT.num][n] = back;
+            cube[Face.LEFT.num][n] = front;
         } else {
             cube[Face.FRONT.num][n] = cube[Face.LEFT.num][n];
             cube[Face.LEFT.num][n] = cube[Face.BACK.num][n];
