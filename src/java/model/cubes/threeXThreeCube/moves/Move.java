@@ -110,29 +110,47 @@ public enum Move {
         //New Top Face
         rotateTopOrBottomAffectedByFrontOrBackRight(cube, true, front);
 
-        //New Left Face
-        for (int i = 0; i < 3; i++) {
-            cube[Face.LEFT.num][i][n] = cube[Face.BOTTOM.num][m][i];
+        if (front) {
+            //New Left Face
+            for (int i = 0; i < 3; i++) {
+                cube[Face.LEFT.num][i][2] = cube[Face.BOTTOM.num][0][i];
+            }
+        } else {
+            //New Right Face
+            for (int i = 0, j = 2; i < tmp.length; i++, j--) {
+                cube[Face.RIGHT.num][i][2] = cube[Face.BOTTOM.num][2][j];
+            }
         }
 
         //New Bottom Face
         rotateTopOrBottomAffectedByFrontOrBackRight(cube, false, front);
 
-        //New Right Face
-        for (int i = 0; i < tmp.length; i++) {
-            cube[Face.RIGHT.num][i][m] = tmp[i];
+        if (front) {
+            //New Right Face
+            for (int i = 0; i < tmp.length; i++) {
+                cube[Face.RIGHT.num][i][0] = tmp[i];
+            }
+        } else {
+            //New Left Face
+            for (int i = 0; i < 3; i++) {
+                cube[Face.LEFT.num][i][0] = tmp[i];
+            }
         }
+
     }
 
     private static void rotateTopOrBottomAffectedByFrontOrBackRight(int[][][] cube, boolean top, boolean front) {
-        int n = top ^ front? 0 : 2;
-        int face = top? Face.LEFT.num : Face.RIGHT.num;
+        int m = top ^ front? 0 : 2;
+        int n = !top? 0 : 2;
+        int face = top ^ front? Face.RIGHT.num : Face.LEFT.num;
 
         var newFace = new int[3];
+
         for (int i = 0; i < newFace.length; i++) {
             newFace[i] = cube[face][i][n];
         }
-        cube[top? Face.TOP.num : Face.BOTTOM.num][n] = Utils.reverseIntArray(newFace);
+
+        cube[top? Face.TOP.num : Face.BOTTOM.num][m] = Utils.reverseIntArray(newFace);
     }
 
     /**

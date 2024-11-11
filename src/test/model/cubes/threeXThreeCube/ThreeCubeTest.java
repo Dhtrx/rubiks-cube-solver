@@ -98,6 +98,34 @@ class ThreeCubeTest {
     }
 
     @Test
+    void rotateRightBR() {
+        var cube = threeCube.getCube();
+        threeCube.rotate(Move.BR);
+        assertArrayEquals(new int[][]{
+                {Color.RED.num, Color.BLUE.num, Color.YELLOW.num},
+                {Color.GREEN.num, Color.ORANGE.num, Color.BLUE.num},
+                {Color.WHITE.num, Color.WHITE.num, Color.RED.num}
+        }, threeCube.getCube()[Face.BACK.num]);
+
+        //asser new top layer
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.YELLOW.num, Color.BLUE.num}, threeCube.getCube()[Face.TOP.num][0]);
+        //assert new bottom layer
+        assertArrayEquals(new int[]{Color.ORANGE.num, Color.RED.num, Color.YELLOW.num}, threeCube.getCube()[Face.BOTTOM.num][2]);
+        //assert new left
+        var newLeft = new int[3];
+        for (int i = 0; i < newLeft.length; i++) {
+            newLeft[i] = cube[Face.LEFT.num][i][0];
+        }
+        assertArrayEquals(new int[]{Color.BLUE.num, Color.ORANGE.num, Color.ORANGE.num}, newLeft);
+        //assert new Right Face
+        var newRight = new int[3];
+        for (int i = 0; i < newRight.length; i++) {
+            newRight[i] = cube[Face.RIGHT.num][i][2];
+        }
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.YELLOW.num, Color.BLUE.num}, newRight);
+    }
+
+    @Test
     void rotateLeft() {
     }
 
