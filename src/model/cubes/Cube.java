@@ -59,5 +59,7 @@ public interface Cube {
      */
     void rotateDown(Face face);
 
+    Color[][] toOneArrayForAnimation();
+
 
 }

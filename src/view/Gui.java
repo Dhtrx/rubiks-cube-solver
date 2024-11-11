@@ -6,6 +6,8 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
+import model.cubes.Color;
+import model.cubes.threeXThreeCube.ThreeCube;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -14,6 +16,7 @@ import java.awt.event.KeyEvent;
 public class Gui extends JFrame implements GLEventListener {
 
     private view.Renderer renderer;
+
     public void create() {
         setTitle("First OpenGL");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +26,37 @@ public class Gui extends JFrame implements GLEventListener {
         GLCanvas canvas = new GLCanvas(capabilities);
         setSize(320, 320);
         getContentPane().add(canvas);
-        renderer = new Renderer();
+        renderer = new Renderer(new ThreeCube(
+                new Color[][]{
+                        {Color.RED, Color.YELLOW, Color.ORANGE},
+                        {Color.ORANGE, Color.WHITE, Color.GREEN},
+                        {Color.BLUE, Color.YELLOW, Color.YELLOW}
+                },
+                new Color[][]{
+                        {Color.BLUE, Color.ORANGE, Color.ORANGE},
+                        {Color.GREEN, Color.YELLOW, Color.BLUE},
+                        {Color.WHITE, Color.ORANGE, Color.BLUE}
+                },
+                new Color[][]{
+                        {Color.RED, Color.RED, Color.BLUE},
+                        {Color.BLUE, Color.GREEN, Color.YELLOW},
+                        {Color.YELLOW, Color.WHITE, Color.GREEN}
+                },
+                new Color[][]{
+                        {Color.YELLOW, Color.RED, Color.ORANGE},
+                        {Color.RED, Color.BLUE, Color.YELLOW},
+                        {Color.ORANGE, Color.GREEN, Color.GREEN}
+                },
+                new Color[][]{
+                        {Color.GREEN, Color.WHITE, Color.WHITE},
+                        {Color.RED, Color.RED, Color.WHITE},
+                        {Color.WHITE, Color.ORANGE, Color.GREEN}
+                },
+                new Color[][]{
+                        {Color.YELLOW, Color.BLUE, Color.RED},
+                        {Color.BLUE, Color.ORANGE, Color.WHITE},
+                        {Color.RED, Color.GREEN, Color.WHITE}
+                }));
 
         final FPSAnimator animator = new FPSAnimator(canvas, 60, true);
 
@@ -44,6 +77,7 @@ public class Gui extends JFrame implements GLEventListener {
                         renderer.rotY = 0;
                         renderer.rotZ = 0;
                     }
+                    case 0x34 -> renderer.startFrontAnimation(canvas);
                 }
             }
         });
