@@ -97,7 +97,45 @@ class ThreeCubeTest {
     }
 
     @Test
-    void rotateLeft() {
+    void rotateLeftDL() {
+        threeCube.rotate(Move.DL);
+        //assert new bottom
+        assertArrayEquals(new int[][]{
+                {Color.ORANGE.num, Color.GREEN.num, Color.YELLOW.num},
+                {Color.YELLOW.num, Color.WHITE.num, Color.YELLOW.num},
+                {Color.RED.num, Color.ORANGE.num, Color.BLUE.num}
+        }, threeCube.getCube()[Face.BOTTOM.num]);
+
+        //assert new front
+        assertArrayEquals(new int[]{Color.ORANGE.num, Color.GREEN.num, Color.GREEN.num}, threeCube.getCube()[Face.FRONT.num][2]);
+        //assert new left
+        assertArrayEquals(new int[]{Color.RED.num, Color.GREEN.num, Color.WHITE.num}, threeCube.getCube()[Face.LEFT.num][2]);
+        //assert new back
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.WHITE.num, Color.GREEN.num}, threeCube.getCube()[Face.BACK.num][2]);
+        //assert new right
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.ORANGE.num, Color.GREEN.num}, threeCube.getCube()[Face.RIGHT.num][2]);
+
+    }
+
+    @Test
+    void rotateLeftTL() {
+        threeCube.rotate(Move.TL);
+        //assert new bottom
+        assertArrayEquals(new int[][]{
+                {Color.ORANGE.num, Color.BLUE.num, Color.BLUE.num},
+                {Color.ORANGE.num, Color.YELLOW.num, Color.ORANGE.num},
+                {Color.BLUE.num, Color.GREEN.num, Color.WHITE.num}
+        }, threeCube.getCube()[Face.TOP.num]);
+
+        //assert new front
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.RED.num, Color.ORANGE.num}, threeCube.getCube()[Face.FRONT.num][0]);
+        //assert new left
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.BLUE.num, Color.RED.num}, threeCube.getCube()[Face.LEFT.num][0]);
+        //assert new back
+        assertArrayEquals(new int[]{Color.RED.num, Color.RED.num, Color.BLUE.num}, threeCube.getCube()[Face.BACK.num][0]);
+        //assert new right
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.WHITE.num, Color.WHITE.num}, threeCube.getCube()[Face.RIGHT.num][0]);
+
     }
 
     @Test

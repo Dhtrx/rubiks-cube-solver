@@ -170,18 +170,13 @@ public enum Move {
         //Save one of the affected Faces last or first row
         var front = cube[Face.FRONT.num][n];
         var back = cube[Face.BACK.num][n];
-        //Rotate the affected Faces last rows counterclockwise
-        if (!top) {
-            cube[Face.FRONT.num][n] = cube[Face.RIGHT.num][n];
-            cube[Face.LEFT.num][n] = cube[Face.FRONT.num][n];
-            cube[Face.BACK.num][n] = cube[Face.LEFT.num][n];
-            cube[Face.RIGHT.num][n] = back;
-        } else {
-            cube[Face.FRONT.num][n] = cube[Face.LEFT.num][n];
-            cube[Face.LEFT.num][n] = cube[Face.BACK.num][n];
-            cube[Face.BACK.num][n] = cube[Face.RIGHT.num][n];
-            cube[Face.RIGHT.num][n] = front;
-        }
+        //Rotate the affected Faces last/first rows counterclockwise
+        cube[Face.FRONT.num][n] = cube[Face.LEFT.num][n];
+        cube[Face.LEFT.num][n] = cube[Face.BACK.num][n];
+        cube[Face.BACK.num][n] = cube[Face.RIGHT.num][n];
+        cube[Face.RIGHT.num][n] = front;
+
+
     }
 
     private static void rotateFaceLeft(int face, int[][][] cube) {
