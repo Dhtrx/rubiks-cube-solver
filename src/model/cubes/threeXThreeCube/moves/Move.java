@@ -4,6 +4,8 @@ import model.Utils;
 import model.cubes.threeXThreeCube.Face;
 import model.cubes.threeXThreeCube.ThreeCube;
 
+import java.util.Arrays;
+
 public enum Move {
     TR,
     TL,
@@ -206,6 +208,41 @@ public enum Move {
      * @param threeCube The cube
      */
     public static void frontLeft(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.FRONT.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByFrontOrBackAffectedFacesLeft(cube, true);
+    }
+
+    private static void rotateByFrontOrBackAffectedFacesLeft(int[][][] cube, boolean front) {
+        int n = front? 2 : 0;
+        int m = front? 0 : 2;
+        int newTop = front? Face.RIGHT.num : Face.LEFT.num;
+        int newBottom = front? Face.LEFT.num : Face.RIGHT.num;
+
+        var oldTop = Arrays.copyOf(cube[Face.TOP.num][n], 3);
+
+        //Get new top layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.TOP.num][n][i] = cube[newTop][front? i : j][0];
+        }
+
+        //Get new newTop layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[newTop][i][0] = cube[Face.BOTTOM.num][m][front? j : i];
+        }
+
+        //Get new Bottom layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BOTTOM.num][m][i] = cube[newBottom][front? i : j][2];
+        }
+
+        //Get new newBottom layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[newBottom][i][2] = oldTop[front? j : i];
+        }
+
 
     }
 
@@ -226,6 +263,10 @@ public enum Move {
      * @param threeCube The cube
      */
     public static void backLeft(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.BACK.num;
 
+        rotateFaceLeft(face, cube);
+        rotateByFrontOrBackAffectedFacesLeft(cube, false);
     }
 }
