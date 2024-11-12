@@ -1,0 +1,44 @@
+FL working
+FR working
+BR working
+BL working
+TR working
+TL working
+DR working
+DL not working
+
+        int n = front? 2 : 0;
+        int m = front? 0 : 2;
+        //Save last or first row of top face
+        var tmp = cube[Face.TOP.num][n];
+
+        //Rotate front- or back-face bordering layers clockwise
+        //New Top Face
+        rotateTopOrBottomAffectedByFrontOrBackRight(cube, true, front);
+
+        if (front) {
+            //New Left Face
+            for (int i = 0; i < 3; i++) {
+                cube[Face.LEFT.num][i][2] = cube[Face.BOTTOM.num][0][i];
+            }
+        } else {
+            //New Right Face
+            for (int i = 0, j = 2; i < tmp.length; i++, j--) {
+                cube[Face.RIGHT.num][i][2] = cube[Face.BOTTOM.num][2][j];
+            }
+        }
+
+        //New Bottom Face
+        rotateTopOrBottomAffectedByFrontOrBackRight(cube, false, front);
+
+        if (front) {
+            //New Right Face
+            for (int i = 0; i < tmp.length; i++) {
+                cube[Face.RIGHT.num][i][0] = tmp[i];
+            }
+        } else {
+            //New Left Face
+            for (int i = 0; i < 3; i++) {
+                cube[Face.LEFT.num][i][0] = tmp[i];
+            }
+        }

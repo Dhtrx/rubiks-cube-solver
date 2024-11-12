@@ -67,7 +67,11 @@ public class Gui extends JFrame implements GLEventListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 float offset = 2.5f;
-                if (e.isControlDown()) offset = -2.5f;
+                int animationOffset = 5;
+                if (e.isControlDown()) {
+                    offset = -2.5f;
+                    animationOffset = -5;
+                }
                 switch (e.getKeyCode()) {
                     case 0x31 -> renderer.rotZ += offset;
                     case 0x32 -> renderer.rotY += offset;
@@ -77,7 +81,22 @@ public class Gui extends JFrame implements GLEventListener {
                         renderer.rotY = 0;
                         renderer.rotZ = 0;
                     }
-                    case 0x34 -> renderer.startFrontAnimation(canvas);
+                    case 0x34 -> {
+                        renderer.animationAngleOffset = animationOffset;
+                        renderer.startFrontAnimation(canvas);
+                    }
+                    case 0x35 -> {
+                        renderer.animationAngleOffset = animationOffset;
+                        renderer.startBackAnimation(canvas);
+                    }
+                    case 0x36 -> {
+                        renderer.animationAngleOffset = animationOffset;
+                        renderer.startTopAnimation(canvas);
+                    }
+                    case 0x37 -> {
+                        renderer.animationAngleOffset = animationOffset;
+                        renderer.startBottomAnimation(canvas);
+                    }
                 }
             }
         });

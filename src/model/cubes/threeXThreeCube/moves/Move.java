@@ -126,10 +126,11 @@ public enum Move {
             }
         } else {
             //New Left Face
-            for (int i = 0; i < 3; i++) {
-                cube[Face.LEFT.num][i][0] = tmp[i];
+            for (int i = 0, j = 2; i < 3; i++, j--) {
+                cube[Face.LEFT.num][i][0] = tmp[j];
             }
         }
+
 
     }
 
@@ -144,7 +145,10 @@ public enum Move {
             newFace[i] = cube[face][i][n];
         }
 
-        cube[top? Face.TOP.num : Face.BOTTOM.num][m] = Utils.reverseIntArray(newFace);
+        if (front) {
+            newFace = Utils.reverseIntArray(newFace);
+        }
+        cube[top? Face.TOP.num : Face.BOTTOM.num][m] = newFace;
     }
 
     /**
