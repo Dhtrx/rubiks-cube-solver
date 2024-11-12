@@ -97,6 +97,54 @@ class ThreeCubeTest {
     }
 
     @Test
+    void rotateRightBR() {
+        var cube = threeCube.getCube();
+        threeCube.rotate(Move.BR);
+        assertArrayEquals(new int[][]{
+                {Color.RED.num, Color.BLUE.num, Color.YELLOW.num},
+                {Color.GREEN.num, Color.ORANGE.num, Color.BLUE.num},
+                {Color.WHITE.num, Color.WHITE.num, Color.RED.num}
+        }, threeCube.getCube()[Face.BACK.num]);
+
+        //asser new top layer
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.YELLOW.num, Color.BLUE.num}, threeCube.getCube()[Face.TOP.num][0]);
+        //assert new bottom layer
+        assertArrayEquals(new int[]{Color.ORANGE.num, Color.RED.num, Color.YELLOW.num}, threeCube.getCube()[Face.BOTTOM.num][2]);
+        //assert new left
+        var newLeft = new int[3];
+        for (int i = 0; i < newLeft.length; i++) {
+            newLeft[i] = cube[Face.LEFT.num][i][0];
+        }
+        assertArrayEquals(new int[]{Color.BLUE.num, Color.ORANGE.num, Color.ORANGE.num}, newLeft);
+        //assert new Right Face
+        var newRight = new int[3];
+        for (int i = 0; i < newRight.length; i++) {
+            newRight[i] = cube[Face.RIGHT.num][i][2];
+        }
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.YELLOW.num, Color.BLUE.num}, newRight);
+    }
+
+    @Test
+    void rotateRightTR() {
+        threeCube.rotate(Move.TR);
+
+        assertArrayEquals(new int[][]{
+                {Color.WHITE.num, Color.GREEN.num, Color.BLUE.num},
+                {Color.ORANGE.num, Color.YELLOW.num, Color.ORANGE.num},
+                {Color.BLUE.num, Color.BLUE.num, Color.ORANGE.num}
+        }, threeCube.getCube()[Face.TOP.num]);
+
+        //assert new Front Face
+        assertArrayEquals(new int[]{Color.RED.num, Color.RED.num, Color.BLUE.num}, threeCube.getCube()[Face.FRONT.num][0]);
+        //assert new Left Face
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.WHITE.num, Color.WHITE.num}, threeCube.getCube()[Face.LEFT.num][0]);
+        //assert new Back Face
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.RED.num, Color.ORANGE.num}, threeCube.getCube()[Face.BACK.num][0]);
+        //assert new Right Face
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.BLUE.num, Color.RED.num}, threeCube.getCube()[Face.RIGHT.num][0]);
+    }
+
+    @Test
     void rotateLeftDL() {
         threeCube.rotate(Move.DL);
         //assert new bottom
