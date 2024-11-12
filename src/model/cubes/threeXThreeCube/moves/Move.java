@@ -1,16 +1,10 @@
 package model.cubes.threeXThreeCube.moves;
 
 import model.Utils;
-import model.cubes.Cube;
 import model.cubes.threeXThreeCube.Face;
 import model.cubes.threeXThreeCube.ThreeCube;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Move {
     TR,
@@ -67,6 +61,7 @@ public enum Move {
 
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private static void rotateByBottomOrTopAffectedFacesRight(int[][][] cube, boolean top) {
         int n = top? 0 : 2;
         //Save one of the affected Faces last or first row
@@ -174,5 +169,121 @@ public enum Move {
 
         rotateFaceRight(face, cube);
         rotateByBottomOrTopAffectedFacesRight(cube, true);
+    }
+
+    /**
+     * Performs the DL Move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void bottomLeft(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.BOTTOM.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByBottomOrTopAffectedFacesLeft(cube, false);
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private static void rotateByBottomOrTopAffectedFacesLeft(int[][][] cube, boolean top) {
+        int n = top? 0 : 2;
+        //Save one of the affected Faces last or first row
+        var front = cube[Face.FRONT.num][n];
+        var back = cube[Face.BACK.num][n];
+        //Rotate the affected Faces last/first rows counterclockwise
+        cube[Face.FRONT.num][n] = cube[Face.LEFT.num][n];
+        cube[Face.LEFT.num][n] = cube[Face.BACK.num][n];
+        cube[Face.BACK.num][n] = cube[Face.RIGHT.num][n];
+        cube[Face.RIGHT.num][n] = front;
+
+
+    }
+
+    private static void rotateFaceLeft(int face, int[][][] cube) {
+        //Safe top row of face except for most right stone cause it will be the new most left stone.
+        var tmp1 = cube[face][0][0];
+        var tmp2 = cube[face][0][1];
+
+        //New Top Row of Face Becomse old right column
+        cube[face][0][0] = cube[face][0][2];
+        cube[face][0][1] = cube[face][1][2];
+        cube[face][0][2] = cube[face][2][2];
+
+        //New Right column becomes old bottom row
+        cube[face][1][2] = cube[face][2][1];
+        cube[face][2][2] = cube[face][2][0];
+
+        //New Bottom row becomes old left column
+        cube[face][2][0] = tmp1;
+        cube[face][2][1] = cube[face][1][0];
+
+        //New left column becomes old top row
+        cube[face][1][0] = tmp2;
+    }
+
+    /**
+     * Performs the FL Move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void frontLeft(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.FRONT.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByFrontOrBackAffectedFacesLeft(cube, true);
+    }
+
+    private static void rotateByFrontOrBackAffectedFacesLeft(int[][][] cube, boolean front) {
+        int n = front? 2 : 0;
+        int m = front? 0 : 2;
+        int newTop = front? Face.RIGHT.num : Face.LEFT.num;
+        int newBottom = front? Face.LEFT.num : Face.RIGHT.num;
+
+        var oldTop = Arrays.copyOf(cube[Face.TOP.num][n], 3);
+
+        //Get new top layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.TOP.num][n][i] = cube[newTop][front? i : j][0];
+        }
+
+        //Get new newTop layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[newTop][i][0] = cube[Face.BOTTOM.num][m][front? j : i];
+        }
+
+        //Get new Bottom layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BOTTOM.num][m][i] = cube[newBottom][front? i : j][2];
+        }
+
+        //Get new newBottom layer
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[newBottom][i][2] = oldTop[front? j : i];
+        }
+
+
+    }
+
+    /**
+     * Performs the TL Move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void topLeft(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.TOP.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByBottomOrTopAffectedFacesLeft(cube, true);
+    }
+
+    /**
+     * Performs the BL Move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void backLeft(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.BACK.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByFrontOrBackAffectedFacesLeft(cube, false);
     }
 }
