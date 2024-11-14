@@ -155,13 +155,13 @@ class ThreeCubeTest {
         }, threeCube.getCube()[Face.BOTTOM.num]);
 
         //assert new front
-        assertArrayEquals(new int[]{Color.ORANGE.num, Color.GREEN.num, Color.GREEN.num}, threeCube.getCube()[Face.FRONT.num][2]);
+        assertArrayEquals(new int[]{Color.YELLOW.num, Color.WHITE.num, Color.GREEN.num}, threeCube.getCube()[Face.FRONT.num][2]);
         //assert new left
-        assertArrayEquals(new int[]{Color.RED.num, Color.GREEN.num, Color.WHITE.num}, threeCube.getCube()[Face.LEFT.num][2]);
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.ORANGE.num, Color.GREEN.num}, threeCube.getCube()[Face.LEFT.num][2]);
         //assert new back
-        assertArrayEquals(new int[]{Color.YELLOW.num, Color.WHITE.num, Color.GREEN.num}, threeCube.getCube()[Face.BACK.num][2]);
+        assertArrayEquals(new int[]{Color.ORANGE.num, Color.GREEN.num, Color.GREEN.num}, threeCube.getCube()[Face.BACK.num][2]);
         //assert new right
-        assertArrayEquals(new int[]{Color.WHITE.num, Color.ORANGE.num, Color.GREEN.num}, threeCube.getCube()[Face.RIGHT.num][2]);
+        assertArrayEquals(new int[]{Color.RED.num, Color.GREEN.num, Color.WHITE.num}, threeCube.getCube()[Face.RIGHT.num][2]);
 
     }
 
