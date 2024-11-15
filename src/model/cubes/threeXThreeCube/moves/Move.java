@@ -296,4 +296,112 @@ public enum Move {
         rotateFaceLeft(face, cube);
         rotateByFrontOrBackAffectedFacesLeft(cube, false);
     }
+
+    /**
+     * Performs the LU Move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void leftUp(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.LEFT.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByLeftOrRightAffectedFacesUp(cube, true);
+    }
+
+    private static void rotateByLeftOrRightAffectedFacesUp(int[][][] cube, boolean left) {
+        int n = left? 0 : 2;
+        int m = left? 2 : 0;
+        int[] oldTop = new int[3];
+
+        for (int i = 0; i < 3; i++) {
+            oldTop[i] = cube[Face.TOP.num][i][n];
+        }
+
+        //Get new top
+        for (int i = 0; i < 3; i++) {
+            cube[Face.TOP.num][i][n] = cube[Face.FRONT.num][i][n];
+        }
+
+        //Get new front
+        for (int i = 0; i < 3; i++) {
+            cube[Face.FRONT.num][i][n] = cube[Face.BOTTOM.num][i][n];
+        }
+
+        //Get new bottom
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BOTTOM.num][i][n] = cube[Face.BACK.num][j][m];
+        }
+
+        //Get new back
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BACK.num][i][m] = oldTop[j];
+        }
+    }
+
+    /**
+     * Performs the RU Move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void rightUp(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.RIGHT.num;
+
+        rotateFaceRight(face, cube);
+        rotateByLeftOrRightAffectedFacesUp(cube, false);
+    }
+
+    /**
+     * Performs the LD move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void leftDown(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.LEFT.num;
+
+        rotateFaceRight(face, cube);
+        rotateByLeftOrRightAffectedFaceDown(cube, true);
+    }
+
+    private static void rotateByLeftOrRightAffectedFaceDown(int[][][] cube, boolean left) {
+        int n = left? 2 : 0;
+        int m = left? 0 : 2;
+        int[] oldTop = new int[3];
+
+        for (int i = 0; i < 3; i++) {
+            oldTop[i] = cube[Face.TOP.num][i][n];
+        }
+
+        //Get new top
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.TOP.num][i][n] = cube[Face.BACK.num][j][n];
+        }
+
+        //Get new front
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BACK.num][i][n] = cube[Face.BOTTOM.num][j][n];
+        }
+
+        //Get new bottom
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BOTTOM.num][i][n] = cube[Face.FRONT.num][j][m];
+        }
+
+        //Get new back
+        for (int i = 0, j = 2; i < 3; i++, j--) {
+            cube[Face.BACK.num][i][m] = oldTop[j];
+        }
+    }
+
+    /**
+     * Performs the RD move on a {@link ThreeCube}
+     * @param threeCube The cube
+     */
+    public static void rightDown(ThreeCube threeCube) {
+        int[][][] cube = threeCube.getCube();
+        int face = Face.RIGHT.num;
+
+        rotateFaceLeft(face, cube);
+        rotateByLeftOrRightAffectedFaceDown(cube, false);
+    }
 }

@@ -244,10 +244,110 @@ class ThreeCubeTest {
     }
 
     @Test
-    void rotateUp() {
+    void rotateUpLU() {
+        threeCube.rotate(Move.LU);
+        assertArrayEquals(new int[][]{
+                {Color.ORANGE.num, Color.YELLOW.num, Color.GREEN.num},
+                {Color.GREEN.num, Color.BLUE.num, Color.RED.num},
+                {Color.YELLOW.num, Color.RED.num, Color.ORANGE.num}
+        }, threeCube.getCube()[Face.LEFT.num]);
+
+        var newTop = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newTop[i] = threeCube.getCube()[Face.TOP.num][i][0];
+        }
+
+        var newFront = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newFront[i] = threeCube.getCube()[Face.FRONT.num][i][0];
+        }
+
+        var newBottom = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newBottom[i] = threeCube.getCube()[Face.BOTTOM.num][i][0];
+        }
+
+        var newBack = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newBack[i] = threeCube.getCube()[Face.BACK.num][i][2];
+        }
+
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.RED.num, Color.WHITE.num}, newTop);
+        assertArrayEquals(new int[]{Color.RED.num, Color.ORANGE.num, Color.BLUE.num}, newFront);
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.WHITE.num, Color.RED.num}, newBottom);
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.GREEN.num, Color.BLUE.num}, newBack);
+
     }
 
     @Test
-    void rotateDown() {
+    void rotateUpRU() {
+        threeCube.rotate(Move.RU);
+        assertArrayEquals(new int[][]{
+                {Color.YELLOW.num, Color.BLUE.num, Color.RED.num},
+                {Color.WHITE.num, Color.GREEN.num, Color.RED.num},
+                {Color.GREEN.num, Color.YELLOW.num, Color.BLUE.num}
+        }, threeCube.getCube()[Face.RIGHT.num]);
+
+        var newTop = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newTop[i] = threeCube.getCube()[Face.TOP.num][i][2];
+        }
+
+        var newFront = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newFront[i] = threeCube.getCube()[Face.FRONT.num][i][2];
+        }
+
+        var newBottom = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newBottom[i] = threeCube.getCube()[Face.BOTTOM.num][i][2];
+        }
+
+        var newBack = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newBack[i] = threeCube.getCube()[Face.BACK.num][i][0];
+        }
+
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.WHITE.num, Color.GREEN.num}, newTop);
+        assertArrayEquals(new int[]{Color.ORANGE.num, Color.GREEN.num, Color.YELLOW.num}, newFront);
+        assertArrayEquals(new int[]{Color.RED.num, Color.BLUE.num, Color.YELLOW.num}, newBottom);
+        assertArrayEquals(new int[]{Color.BLUE.num, Color.BLUE.num, Color.ORANGE.num}, newBack);
+
+    }
+
+    @Test
+    void rotateDownLD() {
+
+        threeCube.rotate(Move.LD);
+        assertArrayEquals(new int[][]{
+                {Color.ORANGE.num, Color.RED.num, Color.YELLOW.num},
+                {Color.GREEN.num, Color.BLUE.num, Color.RED.num},
+                {Color.GREEN.num, Color.YELLOW.num, Color.ORANGE.num}
+        }, threeCube.getCube()[Face.LEFT.num]);
+
+        var newTop = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newTop[i] = threeCube.getCube()[Face.TOP.num][i][0];
+        }
+
+        var newFront = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newFront[i] = threeCube.getCube()[Face.FRONT.num][i][0];
+        }
+
+        var newBottom = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newBottom[i] = threeCube.getCube()[Face.BOTTOM.num][i][0];
+        }
+
+        var newBack = new int[3];
+        for (int i = 0; i < 3; i++) {
+            newBack[i] = threeCube.getCube()[Face.BACK.num][i][2];
+        }
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.WHITE.num, Color.RED.num}, newTop);
+        assertArrayEquals(new int[]{Color.WHITE.num, Color.GREEN.num, Color.BLUE.num}, newFront);
+        assertArrayEquals(new int[]{Color.GREEN.num, Color.RED.num, Color.WHITE.num}, newBottom);
+        assertArrayEquals(new int[]{Color.RED.num, Color.ORANGE.num, Color.BLUE.num}, newBack);
+
     }
 }

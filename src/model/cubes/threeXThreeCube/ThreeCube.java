@@ -106,12 +106,23 @@ public class ThreeCube implements Cube {
 
     @Override
     public void rotateUp(Face face) {
+        int faceNum = face.num;
 
+        switch (faceNum) {
+            case 4 -> Move.leftUp(this);
+            case 3 -> Move.rightUp(this);
+            default -> throw new IllegalArgumentException(STR."Cannot process value \{faceNum}");
+        }
     }
 
     @Override
     public void rotateDown(Face face) {
+        int faceNum = face.num;
 
+        switch (faceNum) {
+            case 4 -> Move.leftDown(this);
+            case 3 -> Move.rightDown(this);
+        }
     }
 
     public int[][][] getCube() {
