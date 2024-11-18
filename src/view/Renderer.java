@@ -21,10 +21,14 @@ public class Renderer {
     public volatile boolean rotatingBack = false;
     public volatile boolean rotatingTop = false;
     public volatile boolean rotatingBottom = false;
+    public volatile boolean rotatingRight = false;
+    public volatile boolean rotatingLeft = false;
     private int backRotationAngle = 0;
     private int topRotationAngle = 0;
     private int bottomRotationAngle = 0;
     private int frontRotationAngle = 0;
+    private int rightRotationAngle = 0;
+    private int leftRotationAngle = 0;
 
     private final GLU glu = new GLU();
     public float rotX = 0f;
@@ -101,6 +105,16 @@ public class Renderer {
                         gl.glTranslatef(0f, spacing, 0f);
                         gl.glRotatef(bottomRotationAngle, 0f, 1f, 0f);
                         gl.glTranslatef(0f, -spacing, 0f);
+                    }
+                    if (x == 1 && rotatingRight) {
+                        gl.glTranslatef(spacing, 0f, 0f);
+                        gl.glRotatef(rightRotationAngle, 1f, 0f, 0f);
+                        gl.glTranslatef(-spacing, 0f, 0f);
+                    }
+                    if (x == -1 && rotatingLeft) {
+                        gl.glTranslatef(spacing, 0f, 0f);
+                        gl.glRotatef(leftRotationAngle, 1f, 0f, 0f);
+                        gl.glTranslatef(-spacing, 0f, 0f);
                     }
 
                     gl.glTranslatef(x * spacing, y * spacing, z * spacing);
@@ -195,6 +209,58 @@ public class Renderer {
         }
     }
 
+    public void startRightAnimation(GLCanvas canvas) {
+        if (!rotatingRight) {
+            rotatingRight = true;
+            rightRotationAngle = 0;
+            animateRightRotation(canvas);
+        }
+    }
+
+    public void startLeftAnimation(GLCanvas canvas) {
+        if (!rotatingLeft) {
+            rotatingLeft = true;
+            leftRotationAngle = 0;
+            animateLeftRotation(canvas);
+        }
+    }
+
+    private void animateLeftRotation(GLCanvas canvas) {
+        Timer timer = new Timer(16, e -> {
+            leftRotationAngle += animationAngleOffset;
+
+            if (leftRotationAngle <= -90 ^ leftRotationAngle >= 90) {
+                leftRotationAngle = leftRotationAngle >= 90? 90 : -90;
+                rotatingLeft = false;
+                ((Timer) e.getSource()).stop();
+                Move move = leftRotationAngle == 90? Move.LD : Move.LU;
+                cube.rotate(move);
+            }
+
+            canvas.display();
+        });
+
+        timer.start();
+    }
+
+    private void animateRightRotation(GLCanvas canvas) {
+        Timer timer = new Timer(16, e -> {
+            rightRotationAngle += animationAngleOffset;
+
+            if (rightRotationAngle <= -90 ^ rightRotationAngle >= 90) {
+                rightRotationAngle = rightRotationAngle >= 90? 90 : -90;
+                rotatingRight = false;
+                ((Timer) e.getSource()).stop();
+                Move move = rightRotationAngle == 90? Move.RD : Move.RU;
+                cube.rotate(move);
+            }
+
+            canvas.display();
+        });
+
+        timer.start();
+    }
+
     private void animateFrontRotation(GLCanvas canvas) {
         Timer timer = new Timer(16, e -> {
             frontRotationAngle += animationAngleOffset;
@@ -205,7 +271,6 @@ public class Renderer {
                 ((Timer) e.getSource()).stop();
                 Move move = frontRotationAngle == 90? Move.FL : Move.FR;
                 cube.rotate(move);
-                System.out.println(move);
             }
 
             canvas.display();
@@ -225,7 +290,6 @@ public class Renderer {
                 ((Timer) e.getSource()).stop();
                 Move move = backRotationAngle == 90? Move.BR : Move.BL;
                 cube.rotate(move);
-                System.out.println(move);
             }
 
             canvas.display();
@@ -243,7 +307,6 @@ public class Renderer {
                 ((Timer) e.getSource()).stop();
                 Move move = topRotationAngle == 90? Move.TL : Move.TR;
                 cube.rotate(move);
-                System.out.println(move);
             }
 
             canvas.display();
@@ -261,7 +324,6 @@ public class Renderer {
                 ((Timer) e.getSource()).stop();
                 Move move = bottomRotationAngle == 90? Move.DR : Move.DL;
                 cube.rotate(move);
-                System.out.println(move);
             }
 
             canvas.display();

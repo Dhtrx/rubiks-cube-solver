@@ -97,6 +97,14 @@ public class Gui extends JFrame implements GLEventListener {
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startBottomAnimation(canvas);
                     }
+                    case 0x38 -> {
+                        renderer.animationAngleOffset = animationOffset;
+                        renderer.startLeftAnimation(canvas);
+                    }
+                    case 0x39 -> {
+                        renderer.animationAngleOffset = animationOffset;
+                        renderer.startRightAnimation(canvas);
+                    }
                 }
             }
         });

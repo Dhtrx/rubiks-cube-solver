@@ -369,27 +369,27 @@ public enum Move {
         int[] oldTop = new int[3];
 
         for (int i = 0; i < 3; i++) {
-            oldTop[i] = cube[Face.TOP.num][i][n];
+            oldTop[i] = cube[Face.TOP.num][i][m];
         }
 
         //Get new top
         for (int i = 0, j = 2; i < 3; i++, j--) {
-            cube[Face.TOP.num][i][n] = cube[Face.BACK.num][j][n];
-        }
-
-        //Get new front
-        for (int i = 0, j = 2; i < 3; i++, j--) {
-            cube[Face.BACK.num][i][n] = cube[Face.BOTTOM.num][j][n];
-        }
-
-        //Get new bottom
-        for (int i = 0, j = 2; i < 3; i++, j--) {
-            cube[Face.BOTTOM.num][i][n] = cube[Face.FRONT.num][j][m];
+            cube[Face.TOP.num][i][m] = cube[Face.BACK.num][j][n];
         }
 
         //Get new back
         for (int i = 0, j = 2; i < 3; i++, j--) {
-            cube[Face.BACK.num][i][m] = oldTop[j];
+            cube[Face.BACK.num][i][n] = cube[Face.BOTTOM.num][j][m];
+        }
+
+        //Get new bottom
+        for (int i = 0; i < 3; i++) {
+            cube[Face.BOTTOM.num][i][m] = cube[Face.FRONT.num][i][m];
+        }
+
+        //Get new front
+        for (int i = 0; i < 3; i++) {
+            cube[Face.FRONT.num][i][m] = oldTop[i];
         }
     }
 
