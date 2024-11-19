@@ -3,10 +3,46 @@ package model.cubes.threeXThreeCube;
 import model.cubes.Color;
 import model.cubes.Cube;
 import model.cubes.threeXThreeCube.moves.Move;
+import model.cubes.threeXThreeCube.solving.Fitness;
 
-public class ThreeCube implements Cube {
+import java.util.Arrays;
+
+public class ThreeCube implements Cube, Fitness<ThreeCube> {
 
     private final int[][][] cube;
+
+    public static final ThreeCube SOLVED = new ThreeCube(
+            new Color[][]{
+                    {Color.WHITE, Color.WHITE, Color.WHITE},
+                    {Color.WHITE, Color.WHITE, Color.WHITE},
+                    {Color.WHITE, Color.WHITE, Color.WHITE}
+            },
+            new Color[][]{
+                    {Color.YELLOW, Color.YELLOW, Color.YELLOW},
+                    {Color.YELLOW, Color.YELLOW, Color.YELLOW},
+                    {Color.YELLOW, Color.YELLOW, Color.YELLOW}
+            },
+            new Color[][]{
+                    {Color.GREEN, Color.GREEN, Color.GREEN},
+                    {Color.GREEN, Color.GREEN, Color.GREEN},
+                    {Color.GREEN, Color.GREEN, Color.GREEN}
+            },
+            new Color[][]{
+                    {Color.BLUE, Color.BLUE, Color.BLUE},
+                    {Color.BLUE, Color.BLUE, Color.BLUE},
+                    {Color.BLUE, Color.BLUE, Color.BLUE}
+            },
+            new Color[][]{
+                    {Color.RED, Color.RED, Color.RED},
+                    {Color.RED, Color.RED, Color.RED},
+                    {Color.RED, Color.RED, Color.RED}
+            },
+            new Color[][]{
+                    {Color.ORANGE, Color.ORANGE, Color.ORANGE},
+                    {Color.ORANGE, Color.ORANGE, Color.ORANGE},
+                    {Color.ORANGE, Color.ORANGE, Color.ORANGE}
+            }
+    );
 
     public ThreeCube(Color[][] bottomFace,
                      Color[][] topFace,
@@ -175,5 +211,26 @@ public class ThreeCube implements Cube {
         return ret;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ThreeCube other)) {
+            return false;
+        }
 
+        for (int i = 0; i < this.cube.length; i++) {
+            for (int j = 0; j < this.cube[0].length; j++) {
+                if (!Arrays.equals(this.cube[i][j], other.cube[i][j])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    @Override
+    public double fitness() {
+        return 0d;
+    }
 }
