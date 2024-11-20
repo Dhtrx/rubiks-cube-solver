@@ -4,45 +4,19 @@ import model.cubes.Color;
 import model.cubes.Cube;
 import model.cubes.threeXThreeCube.moves.Move;
 import model.cubes.threeXThreeCube.solving.Fitness;
+import model.cubes.threeXThreeCube.solving.genetic.model.NoSolutionException;
+import model.cubes.threeXThreeCube.solving.genetic.model.Problem;
+import model.cubes.threeXThreeCube.solving.genetic.model.Solution;
+import model.cubes.threeXThreeCube.solving.genetic.model.SolvedThreeCube;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class ThreeCube implements Cube, Fitness<ThreeCube> {
+public class ThreeCube implements Cube, Problem {
 
     private final int[][][] cube;
-
-    public static final ThreeCube SOLVED = new ThreeCube(
-            new Color[][]{
-                    {Color.WHITE, Color.WHITE, Color.WHITE},
-                    {Color.WHITE, Color.WHITE, Color.WHITE},
-                    {Color.WHITE, Color.WHITE, Color.WHITE}
-            },
-            new Color[][]{
-                    {Color.YELLOW, Color.YELLOW, Color.YELLOW},
-                    {Color.YELLOW, Color.YELLOW, Color.YELLOW},
-                    {Color.YELLOW, Color.YELLOW, Color.YELLOW}
-            },
-            new Color[][]{
-                    {Color.GREEN, Color.GREEN, Color.GREEN},
-                    {Color.GREEN, Color.GREEN, Color.GREEN},
-                    {Color.GREEN, Color.GREEN, Color.GREEN}
-            },
-            new Color[][]{
-                    {Color.BLUE, Color.BLUE, Color.BLUE},
-                    {Color.BLUE, Color.BLUE, Color.BLUE},
-                    {Color.BLUE, Color.BLUE, Color.BLUE}
-            },
-            new Color[][]{
-                    {Color.RED, Color.RED, Color.RED},
-                    {Color.RED, Color.RED, Color.RED},
-                    {Color.RED, Color.RED, Color.RED}
-            },
-            new Color[][]{
-                    {Color.ORANGE, Color.ORANGE, Color.ORANGE},
-                    {Color.ORANGE, Color.ORANGE, Color.ORANGE},
-                    {Color.ORANGE, Color.ORANGE, Color.ORANGE}
-            }
-    );
 
     public ThreeCube(Color[][] bottomFace,
                      Color[][] topFace,
@@ -230,7 +204,32 @@ public class ThreeCube implements Cube, Fitness<ThreeCube> {
     }
 
     @Override
-    public double fitness() {
-        return 0d;
+    public Solution createNewSolution() throws NoSolutionException {
+        List<Move> moves = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            Move move = Move.values()[ThreadLocalRandom.current().nextInt(Move.values().length)];
+            this.rotate(move);
+            moves.add(move);
+        }
+        if (this.equals(SolvedThreeCube.SOLVED)) {
+            return new SolvedThreeCube(this);
+        }
+
+        for (int i = 0; i < 20; i++) {
+            Move move = Move.values()[ThreadLocalRandom.current().nextInt(Move.values().length)];
+            this.rotate(move);
+            moves.add(move);
+            if (this.equals(SolvedThreeCube.SOLVED)) {
+                return new SolvedThreeCube(this);
+            }
+        }
+
+        return new SolvedThreeCube(this);
+
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.deepToString(this.cube);
     }
 }

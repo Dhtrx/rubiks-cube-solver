@@ -13,4 +13,8 @@ public class Population<E extends Cube> {
         population = new ArrayList<>();
     }
 
+    public void add(E cube) {
+        population.add(cube);
+    }
+
 }
