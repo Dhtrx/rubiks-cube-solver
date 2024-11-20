@@ -42,6 +42,24 @@ public class ThreeCube implements Cube, Problem {
         initBackFace(backFace);
     }
 
+    public ThreeCube(ThreeCube other) {
+        if (other == null || other.cube == null) {
+            throw new IllegalArgumentException("The provided ThreeCube instance is null or has an uninitialized cube.");
+        }
+
+        int x = other.cube.length;
+        int y = other.cube[0].length;
+        int z = other.cube[0][0].length;
+
+        // Tiefen-Kopie des Arrays erstellen
+        this.cube = new int[x][y][z];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                System.arraycopy(other.cube[i][j], 0, this.cube[i][j], 0, z);
+            }
+        }
+    }
+
     private void initBackFace(Color[][] backFace) {
         this.cube[Face.BACK.num] = Color.asInts(backFace);
     }

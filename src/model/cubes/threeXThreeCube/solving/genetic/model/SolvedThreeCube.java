@@ -45,7 +45,7 @@ public class SolvedThreeCube extends Solution {
     private final List<Move> moves;
 
     public SolvedThreeCube(Problem problem) {
-        super(problem);
+        super(new ThreeCube((ThreeCube) problem));
         moves = new ArrayList<>();
     }
 

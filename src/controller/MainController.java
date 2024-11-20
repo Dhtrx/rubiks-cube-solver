@@ -4,9 +4,13 @@ import model.cubes.Color;
 import model.cubes.threeXThreeCube.ThreeCube;
 import model.cubes.threeXThreeCube.solving.genetic.GeneticAlgorithm;
 import model.cubes.threeXThreeCube.solving.genetic.model.Solution;
+import model.cubes.threeXThreeCube.solving.genetic.model.SolvedThreeCube;
 import model.cubes.threeXThreeCube.solving.genetic.operators.ThreeCubeFitnessEvaluator;
 import model.cubes.threeXThreeCube.solving.genetic.operators.ThreeCubeMutation;
 import model.cubes.threeXThreeCube.solving.genetic.operators.TopKSurvival;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class MainController {
 
@@ -42,15 +46,16 @@ public class MainController {
                         {Color.BLUE, Color.ORANGE, Color.WHITE},
                         {Color.RED, Color.GREEN, Color.WHITE}
                 }
-        ), 100, 1000);
+        ), 100000, 1000);
 
         algorithm.addEvolutionaryOperator(new ThreeCubeMutation());
         algorithm.setFitnessEvaluator(new ThreeCubeFitnessEvaluator());
         algorithm.setSurvivalOperator(new TopKSurvival(20));
 
-        for (Solution solution: algorithm.run()) {
-            System.out.println(solution.getProblem().toString());
-        }
+        List<Solution> solutions = algorithm.run();
+
+        solutions.sort(Comparator.comparing(Solution::getFitness).reversed());
+        System.out.println(STR."\{solutions.get(0).getProblem()} \{solutions.get(0).getFitness()}");
     }
 
 }
