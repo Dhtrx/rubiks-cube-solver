@@ -1,6 +1,7 @@
 package controller;
 
 import model.cubes.Color;
+import model.cubes.Cube;
 import model.cubes.threeXThreeCube.ThreeCube;
 import model.cubes.threeXThreeCube.solving.genetic.GeneticAlgorithm;
 import model.cubes.threeXThreeCube.solving.genetic.model.Solution;
@@ -8,6 +9,7 @@ import model.cubes.threeXThreeCube.solving.genetic.model.SolvedThreeCube;
 import model.cubes.threeXThreeCube.solving.genetic.operators.ThreeCubeFitnessEvaluator;
 import model.cubes.threeXThreeCube.solving.genetic.operators.ThreeCubeMutation;
 import model.cubes.threeXThreeCube.solving.genetic.operators.TopKSurvival;
+import model.cubes.threeXThreeCube.solving.kociemba.Solve;
 
 import java.util.Comparator;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 public class MainController {
 
     public static void main(String[] args) {
-        GeneticAlgorithm algorithm = new GeneticAlgorithm(new ThreeCube(
+        ThreeCube cube = new ThreeCube(
                 new Color[][]{
                         {Color.RED, Color.YELLOW, Color.ORANGE},
                         {Color.ORANGE, Color.WHITE, Color.GREEN},
@@ -46,8 +48,8 @@ public class MainController {
                         {Color.BLUE, Color.ORANGE, Color.WHITE},
                         {Color.RED, Color.GREEN, Color.WHITE}
                 }
-        ), 100000, 1000);
-
+        );
+        /*
         algorithm.addEvolutionaryOperator(new ThreeCubeMutation());
         algorithm.setFitnessEvaluator(new ThreeCubeFitnessEvaluator());
         algorithm.setSurvivalOperator(new TopKSurvival(20));
@@ -56,6 +58,9 @@ public class MainController {
 
         solutions.sort(Comparator.comparing(Solution::getFitness).reversed());
         System.out.println(STR."\{solutions.get(0).getProblem()} \{solutions.get(0).getFitness()}");
+
+         */
+        Solve.solveThreeCube(cube);
     }
 
 }

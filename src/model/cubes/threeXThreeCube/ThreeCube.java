@@ -3,7 +3,6 @@ package model.cubes.threeXThreeCube;
 import model.cubes.Color;
 import model.cubes.Cube;
 import model.cubes.threeXThreeCube.moves.Move;
-import model.cubes.threeXThreeCube.solving.Fitness;
 import model.cubes.threeXThreeCube.solving.genetic.model.NoSolutionException;
 import model.cubes.threeXThreeCube.solving.genetic.model.Problem;
 import model.cubes.threeXThreeCube.solving.genetic.model.Solution;
