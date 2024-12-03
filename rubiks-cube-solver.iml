@@ -35,6 +35,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="python.jython" level="project" />
   </component>
 </module>

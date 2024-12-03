@@ -5,6 +5,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import model.cubes.Cube;
 import model.cubes.Color;
+import model.cubes.threeXThreeCube.ThreeCube;
 import model.cubes.threeXThreeCube.moves.Move;
 
 import java.awt.*;
@@ -15,14 +16,14 @@ import java.util.List;
 import javax.swing.Timer;
 
 public class Renderer {
-
-    private Cube cube;
+    private ThreeCube cube;
     public volatile boolean rotatingFront = false;
     public volatile boolean rotatingBack = false;
     public volatile boolean rotatingTop = false;
     public volatile boolean rotatingBottom = false;
     public volatile boolean rotatingRight = false;
     public volatile boolean rotatingLeft = false;
+    public volatile boolean rotating = false;
     private int backRotationAngle = 0;
     private int topRotationAngle = 0;
     private int bottomRotationAngle = 0;
@@ -37,7 +38,7 @@ public class Renderer {
 
     public int animationAngleOffset;
 
-    public Renderer(Cube cube) {
+    public Renderer(ThreeCube cube) {
         this.cube = cube;
     }
 
@@ -177,6 +178,65 @@ public class Renderer {
         gl.glEnd();
     }
 
+    public void startAnimation(GLCanvas canvas, Move move) {
+        if (rotating) {
+            return;
+        }
+        rotating = true;
+        int animationOffset = 5;
+        switch (move) {
+            case TR -> {
+                animationAngleOffset = -animationOffset;
+                startTopAnimation(canvas);
+            }
+            case TL -> {
+                animationAngleOffset = animationOffset;
+                startTopAnimation(canvas);
+            }
+            case DR -> {
+                animationAngleOffset = animationOffset;
+                startBottomAnimation(canvas);
+            }
+            case DL -> {
+                animationAngleOffset = -animationOffset;
+                startBottomAnimation(canvas);
+            }
+            case FR -> {
+                animationAngleOffset = -animationOffset;
+                startFrontAnimation(canvas);
+            }
+            case FL -> {
+                animationAngleOffset = animationOffset;
+                startFrontAnimation(canvas);
+            }
+            case BL -> {
+                animationAngleOffset = -animationOffset;
+                startBackAnimation(canvas);
+            }
+            case BR -> {
+                animationAngleOffset = animationOffset;
+                startBackAnimation(canvas);
+            }
+            case RU -> {
+                animationAngleOffset = -animationOffset;
+                startRightAnimation(canvas);
+            }
+            case RD -> {
+                animationAngleOffset = animationOffset;
+                startRightAnimation(canvas);
+            }
+            case LU -> {
+                animationAngleOffset = -animationOffset;
+                startLeftAnimation(canvas);
+            }
+            case LD -> {
+                animationAngleOffset = animationOffset;
+                startLeftAnimation(canvas);
+            }
+        }
+        canvas.display();
+    }
+
     public void startFrontAnimation(GLCanvas canvas) {
         if (!rotatingFront) {
             rotatingFront = true;
@@ -232,6 +292,7 @@ public class Renderer {
             if (leftRotationAngle <= -90 ^ leftRotationAngle >= 90) {
                 leftRotationAngle = leftRotationAngle >= 90? 90 : -90;
                 rotatingLeft = false;
+                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = leftRotationAngle == 90? Move.LD : Move.LU;
                 cube.rotate(move);
@@ -250,6 +311,7 @@ public class Renderer {
             if (rightRotationAngle <= -90 ^ rightRotationAngle >= 90) {
                 rightRotationAngle = rightRotationAngle >= 90? 90 : -90;
                 rotatingRight = false;
+                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = rightRotationAngle == 90? Move.RD : Move.RU;
                 cube.rotate(move);
@@ -268,6 +330,7 @@ public class Renderer {
             if (frontRotationAngle <= -90 ^ frontRotationAngle >= 90) {
                 frontRotationAngle = frontRotationAngle >= 90? 90 : -90;
                 rotatingFront = false;
+                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = frontRotationAngle == 90? Move.FL : Move.FR;
                 cube.rotate(move);
@@ -287,6 +350,7 @@ public class Renderer {
             if (backRotationAngle <= -90 ^ backRotationAngle >= 90) {
                 backRotationAngle = backRotationAngle >= 90 ? 90 : -90;
                 rotatingBack = false;
+                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = backRotationAngle == 90? Move.BR : Move.BL;
                 cube.rotate(move);
@@ -304,6 +368,7 @@ public class Renderer {
             if (topRotationAngle <= -90 ^ topRotationAngle >= 90) {
                 topRotationAngle = topRotationAngle >= 90 ? 90 : -90;
                 rotatingTop = false;
+                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = topRotationAngle == 90? Move.TL : Move.TR;
                 cube.rotate(move);
@@ -321,6 +386,7 @@ public class Renderer {
             if (bottomRotationAngle <= -90 ^ bottomRotationAngle >= 90) {
                 bottomRotationAngle = bottomRotationAngle >= 90 ? 90 : -90;
                 rotatingBottom = false;
+                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = bottomRotationAngle == 90? Move.DR : Move.DL;
                 cube.rotate(move);
@@ -331,6 +397,9 @@ public class Renderer {
         timer.start();
     }
 
+    public ThreeCube getCube() {
+        return cube;
+    }
 }
 
 

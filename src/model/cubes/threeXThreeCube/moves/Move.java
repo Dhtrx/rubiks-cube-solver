@@ -7,18 +7,34 @@ import model.cubes.threeXThreeCube.ThreeCube;
 import java.util.Arrays;
 
 public enum Move {
-    TR,
-    TL,
-    DR,
-    DL,
-    FR,
-    FL,
-    BL,
-    BR,
-    RU,
-    RD,
-    LU,
-    LD;
+    TR("U"),
+    TL("U'"),
+    DR("D'"),
+    DL("D"),
+    FR("F"),
+    FL("F'"),
+    BL("B'"),
+    BR("B"),
+    RU("R"),
+    RD("R'"),
+    LU("L"),
+    LD("L'"),
+    ER("ER");
+
+    private String kociembaMove;
+
+    Move(String kociembaMove) {
+        this.kociembaMove = kociembaMove;
+    }
+
+    public static Move fromKociemba(String kociembaMove) {
+        for (Move move: values()) {
+            if (move.kociembaMove.equals(kociembaMove)) {
+                return move;
+            }
+        }
+        return ER;
+    }
 
     /**
      * Rotates only the focussed {@link Face} of a move. Ignoring the other faces that change thereby.

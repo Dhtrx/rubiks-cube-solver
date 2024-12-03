@@ -8,24 +8,23 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 import model.cubes.Color;
 import model.cubes.threeXThreeCube.ThreeCube;
+import model.cubes.threeXThreeCube.moves.Move;
+import model.cubes.threeXThreeCube.solving.kociemba.Solve;
 
 import javax.swing.*;
+import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Gui extends JFrame implements GLEventListener {
 
     private view.Renderer renderer;
+    private final JButton solveButton = new JButton("Solve");
 
     public void create() {
-        setTitle("First OpenGL");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        GLProfile profile = GLProfile.getDefault();
-        GLCapabilities capabilities = new GLCapabilities(profile);
-        GLCanvas canvas = new GLCanvas(capabilities);
-        setSize(320, 320);
-        getContentPane().add(canvas);
         renderer = new Renderer(new ThreeCube(
                 new Color[][]{
                         {Color.RED, Color.YELLOW, Color.ORANGE},
@@ -57,6 +56,16 @@ public class Gui extends JFrame implements GLEventListener {
                         {Color.BLUE, Color.ORANGE, Color.WHITE},
                         {Color.RED, Color.GREEN, Color.WHITE}
                 }));
+
+        setTitle("First OpenGL");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        GLProfile profile = GLProfile.getDefault();
+        GLCapabilities capabilities = new GLCapabilities(profile);
+        GLCanvas canvas = new GLCanvas(capabilities);
+        setSize(320, 320);
+        getContentPane().add(canvas);
 
         final FPSAnimator animator = new FPSAnimator(canvas, 60, true);
 
@@ -108,6 +117,16 @@ public class Gui extends JFrame implements GLEventListener {
                 }
             }
         });
+
+        solveButton.addActionListener(e -> {
+            List<Move> solveMoves = Solve.solveThreeCube(renderer.getCube());
+            assert solveMoves != null;
+            for (Move move: solveMoves) {
+                renderer.startAnimation(canvas, move);
+                while (renderer.rotating);
+            }
+        });
+        add(solveButton, BorderLayout.SOUTH);
 
         animator.start();
     }

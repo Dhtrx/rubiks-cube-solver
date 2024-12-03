@@ -60,7 +60,7 @@ public class MainController {
         System.out.println(STR."\{solutions.get(0).getProblem()} \{solutions.get(0).getFitness()}");
 
          */
-        Solve.solveThreeCube(cube);
+        System.out.println(Solve.solveThreeCube(cube));
     }
 
 }
