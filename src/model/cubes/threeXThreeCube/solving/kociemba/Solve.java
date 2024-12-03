@@ -22,7 +22,6 @@ public class Solve {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String result = reader.readLine();
-            System.out.println(result);
             return getMyMoves(result);
         } catch (Exception e) {
             e.printStackTrace();

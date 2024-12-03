@@ -12,8 +12,8 @@ import model.cubes.threeXThreeCube.moves.Move;
 import model.cubes.threeXThreeCube.solving.kociemba.Solve;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -23,6 +23,9 @@ public class Gui extends JFrame implements GLEventListener {
 
     private view.Renderer renderer;
     private final JButton solveButton = new JButton("Solve");
+    private final JButton nextMoveButton = new JButton("Next Move");
+    private final JButton generateSolutionButton = new JButton("Generate Solution");
+    private List<Move> solution;
 
     public void create() {
         renderer = new Renderer(new ThreeCube(
@@ -118,15 +121,22 @@ public class Gui extends JFrame implements GLEventListener {
             }
         });
 
-        solveButton.addActionListener(e -> {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        buttonPanel.add(solveButton);
+        buttonPanel.add(nextMoveButton);
+        buttonPanel.add(generateSolutionButton);
+
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        solveButton.addActionListener(_ -> {
             List<Move> solveMoves = Solve.solveThreeCube(renderer.getCube());
             assert solveMoves != null;
-            for (Move move: solveMoves) {
-                renderer.startAnimation(canvas, move);
-                while (renderer.rotating);
-            }
+            renderer.solveCube(canvas, solveMoves);
         });
-        add(solveButton, BorderLayout.SOUTH);
+        generateSolutionButton.addActionListener(_ -> solution = Solve.solveThreeCube(renderer.getCube()));
+        nextMoveButton.addActionListener(_ -> renderer.startAnimation(canvas, solution.removeFirst()));
 
         animator.start();
     }

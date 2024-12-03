@@ -178,10 +178,16 @@ public class Renderer {
         gl.glEnd();
     }
 
+    public void solveCube(GLCanvas canvas, List<Move> moves) {
+        Thread thread = new Thread(() -> {
+            for (Move move : moves) {
+                while (rotating); //do nothing
+                startAnimation(canvas, move);
+            }
+        });
+        thread.start();
+    }
     public void startAnimation(GLCanvas canvas, Move move) {
-        if (rotating) {
-            return;
-        }
         rotating = true;
         int animationOffset = 5;
         switch (move) {
@@ -292,10 +298,10 @@ public class Renderer {
             if (leftRotationAngle <= -90 ^ leftRotationAngle >= 90) {
                 leftRotationAngle = leftRotationAngle >= 90? 90 : -90;
                 rotatingLeft = false;
-                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = leftRotationAngle == 90? Move.LD : Move.LU;
                 cube.rotate(move);
+                rotating = false;
             }
 
             canvas.display();
@@ -311,10 +317,10 @@ public class Renderer {
             if (rightRotationAngle <= -90 ^ rightRotationAngle >= 90) {
                 rightRotationAngle = rightRotationAngle >= 90? 90 : -90;
                 rotatingRight = false;
-                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = rightRotationAngle == 90? Move.RD : Move.RU;
                 cube.rotate(move);
+                rotating = false;
             }
 
             canvas.display();
@@ -330,10 +336,10 @@ public class Renderer {
             if (frontRotationAngle <= -90 ^ frontRotationAngle >= 90) {
                 frontRotationAngle = frontRotationAngle >= 90? 90 : -90;
                 rotatingFront = false;
-                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = frontRotationAngle == 90? Move.FL : Move.FR;
                 cube.rotate(move);
+                rotating = false;
             }
 
             canvas.display();
@@ -350,10 +356,10 @@ public class Renderer {
             if (backRotationAngle <= -90 ^ backRotationAngle >= 90) {
                 backRotationAngle = backRotationAngle >= 90 ? 90 : -90;
                 rotatingBack = false;
-                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = backRotationAngle == 90? Move.BR : Move.BL;
                 cube.rotate(move);
+                rotating = false;
             }
 
             canvas.display();
@@ -364,14 +370,13 @@ public class Renderer {
     private void animateTopRotation(GLCanvas canvas) {
         Timer timer = new Timer(16, e -> {
             topRotationAngle += animationAngleOffset;
-
             if (topRotationAngle <= -90 ^ topRotationAngle >= 90) {
                 topRotationAngle = topRotationAngle >= 90 ? 90 : -90;
                 rotatingTop = false;
-                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = topRotationAngle == 90? Move.TL : Move.TR;
                 cube.rotate(move);
+                rotating = false;
             }
 
             canvas.display();
@@ -386,10 +391,10 @@ public class Renderer {
             if (bottomRotationAngle <= -90 ^ bottomRotationAngle >= 90) {
                 bottomRotationAngle = bottomRotationAngle >= 90 ? 90 : -90;
                 rotatingBottom = false;
-                rotating = false;
                 ((Timer) e.getSource()).stop();
                 Move move = bottomRotationAngle == 90? Move.DR : Move.DL;
                 cube.rotate(move);
+                rotating = false;
             }
 
             canvas.display();

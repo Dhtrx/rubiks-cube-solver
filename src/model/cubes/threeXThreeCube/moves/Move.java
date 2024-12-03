@@ -9,16 +9,16 @@ import java.util.Arrays;
 public enum Move {
     TR("U"),
     TL("U'"),
-    DR("D'"),
-    DL("D"),
+    DR("D"),
+    DL("D'"),
     FR("F"),
     FL("F'"),
     BL("B'"),
     BR("B"),
     RU("R"),
     RD("R'"),
-    LU("L"),
-    LD("L'"),
+    LU("L'"),
+    LD("L"),
     ER("ER");
 
     private String kociembaMove;
