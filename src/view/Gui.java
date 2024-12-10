@@ -10,6 +10,7 @@ import model.cubes.Color;
 import model.cubes.threeXThreeCube.ThreeCube;
 import model.cubes.threeXThreeCube.moves.Move;
 import model.cubes.threeXThreeCube.solving.kociemba.Solve;
+import view.error.ErrorUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class Gui extends JFrame implements GLEventListener {
     private final JButton nextMoveButton = new JButton("Next Move");
     private final JButton generateSolutionButton = new JButton("Generate Solution");
     private List<Move> solution;
+    private boolean validSolution = false;
 
     public void create() {
         renderer = new Renderer(new ThreeCube(
@@ -94,26 +96,32 @@ public class Gui extends JFrame implements GLEventListener {
                         renderer.rotZ = 0;
                     }
                     case 0x34 -> {
+                        validSolution = false;
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startFrontAnimation(canvas);
                     }
                     case 0x35 -> {
+                        validSolution = false;
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startBackAnimation(canvas);
                     }
                     case 0x36 -> {
+                        validSolution = false;
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startTopAnimation(canvas);
                     }
                     case 0x37 -> {
+                        validSolution = false;
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startBottomAnimation(canvas);
                     }
                     case 0x38 -> {
+                        validSolution = false;
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startLeftAnimation(canvas);
                     }
                     case 0x39 -> {
+                        validSolution = false;
                         renderer.animationAngleOffset = animationOffset;
                         renderer.startRightAnimation(canvas);
                     }
@@ -131,12 +139,33 @@ public class Gui extends JFrame implements GLEventListener {
         add(buttonPanel, BorderLayout.SOUTH);
 
         solveButton.addActionListener(_ -> {
-            List<Move> solveMoves = Solve.solveThreeCube(renderer.getCube());
-            assert solveMoves != null;
-            renderer.solveCube(canvas, solveMoves);
+            //List<Move> solveMoves = Solve.solveThreeCube(renderer.getCube());
+            if (validSolution) {
+                renderer.solveCube(canvas, List.copyOf(solution));
+                validSolution = false;
+                solution.clear();
+            } else if (solution == null || !solution.isEmpty()) {
+                ErrorUtil.errorMessage("The current Solution is not valid. Press generate Solution first.");
+            } else {
+                ErrorUtil.successMessage("The cube is already solved.");
+            }
         });
-        generateSolutionButton.addActionListener(_ -> solution = Solve.solveThreeCube(renderer.getCube()));
-        nextMoveButton.addActionListener(_ -> renderer.startAnimation(canvas, solution.removeFirst()));
+        generateSolutionButton.addActionListener(_ -> {
+            solution = Solve.solveThreeCube(renderer.getCube());
+            validSolution = true;
+        });
+        nextMoveButton.addActionListener(_ -> {
+            if (solution == null || solution.isEmpty()) {
+                validSolution = false;
+            }
+            if (validSolution) {
+                renderer.startAnimation(canvas, solution.removeFirst());
+            } else if (solution == null || !solution.isEmpty()) {
+                ErrorUtil.errorMessage("The current solution is not valid. Press generate Solution first.");
+            } else {
+                ErrorUtil.successMessage("The cube is already solved");
+            }
+        });
 
         animator.start();
     }
